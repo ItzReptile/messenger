@@ -1,5 +1,6 @@
 "use client";
 
+import Button from "@/app/components/Button";
 import Input from "@/app/components/inputs/Input";
 import { useState, useCallback } from "react";
 import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
@@ -46,12 +47,33 @@ const AuthForm = () => {
     setIsLoading(true);
     // NEXTAUTH SOCIAL SIGN IN
   };
-  return <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md ">
-    <div className="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
+  return (
+    <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md ">
+      <div className="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-            <Input label="Email"/>
+          {variant === "REGISTER" && (
+            <Input errors={errors} id="name" label="Name" register={register} />
+          )}
+          <Input
+            errors={errors}
+            id="email"
+            type="email"
+            label="Email address"
+            register={register}
+          />
+          <Input
+            errors={errors}
+            id="password"
+            type="password"
+            label="Password"
+            register={register}
+          />
+          <div>
+            <Button disabled={isLoading} fullWidth type="submit">{variant === "LOGIN" ? "Sign In" : "Register"}</Button>
+          </div>
         </form>
+      </div>
     </div>
-  </div>;
+  );
 };
 export default AuthForm;
